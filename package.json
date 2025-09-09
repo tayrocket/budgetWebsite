@@ -8,14 +8,19 @@
     "start": "npx http-server -p 3000",
     "dev": "npx live-server --port=3000"
   },
-  "keywords": ["budget", "finance", "tracker", "money"],
+  "keywords": [
+    "budget",
+    "finance",
+    "tracker",
+    "money"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "firebase": "^10.7.1"
+    "firebase": "^12.2.1"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.0"
   }
 }
