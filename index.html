@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-wallet"></i> Budget Tracker</h1>
+            <p>Take control of your finances</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="balance-card">
+                <h2>Total Balance</h2>
+                <div class="balance-amount" id="totalBalance">$0.00</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card income">
+                    <i class="fas fa-arrow-up"></i>
+                    <h3>Income</h3>
+                    <div class="stat-amount" id="totalIncome">$0.00</div>
+                </div>
+                <div class="stat-card expense">
+                    <i class="fas fa-arrow-down"></i>
+                    <h3>Expenses</h3>
+                    <div class="stat-amount" id="totalExpenses">$0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="transaction-section">
+                <h2>Add Transaction</h2>
+                <form id="transactionForm" class="transaction-form">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" name="amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select id="type" name="type" required>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" required>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="investment">Investment</option>
+                            <option value="food">Food</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Transaction
+                    </button>
+                </form>
+            </div>
+
+            <div class="transactions-section">
+                <h2>Recent Transactions</h2>
+                <div class="transactions-list" id="transactionsList">
+                    <div class="no-transactions">
+                        <i class="fas fa-receipt"></i>
+                        <p>No transactions yet. Add your first transaction above!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
