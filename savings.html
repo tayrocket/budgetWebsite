@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Tracker - Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-piggy-bank"></i> Savings Tracker</h1>
+            <p>Track your savings by category</p>
+            <div class="auth-section" id="authSection">
+                <button id="signInBtn" class="btn btn-secondary">Sign In</button>
+                <button id="signUpBtn" class="btn btn-outline">Sign Up</button>
+                <button id="signOutBtn" class="btn btn-danger" style="display: none;">Sign Out</button>
+                <a href="index.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Back to Budget
+                </a>
+            </div>
+        </header>
+
+        <!-- Authentication Forms -->
+        <div class="auth-forms" id="authForms" style="display: none;">
+            <div class="auth-form-container">
+                <form id="signInForm" class="auth-form">
+                    <h2>Sign In</h2>
+                    <div class="form-group">
+                        <label for="signInEmail">Email</label>
+                        <input type="email" id="signInEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signInPassword">Password</label>
+                        <input type="password" id="signInPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+
+                <form id="signUpForm" class="auth-form">
+                    <h2>Sign Up</h2>
+                    <div class="form-group">
+                        <label for="signUpEmail">Email</label>
+                        <input type="email" id="signUpEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpPassword">Password</label>
+                        <input type="password" id="signUpPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="savings-dashboard">
+            <div class="total-savings-card">
+                <h2>Total Savings</h2>
+                <div class="savings-amount" id="totalSavings">$0.00</div>
+                <p class="savings-subtitle">Across all categories</p>
+            </div>
+
+            <div class="savings-categories" id="savingsCategories">
+                <h2>Savings by Category</h2>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Categories will be populated here -->
+                </div>
+            </div>
+
+            <div class="category-breakdown">
+                <h2>Category Breakdown</h2>
+                <div class="breakdown-chart" id="breakdownChart">
+                    <!-- Chart will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="add-category-section">
+                <h2>Add New Category</h2>
+                <form id="categoryForm" class="category-form">
+                    <div class="form-group">
+                        <label for="categoryName">Category Name</label>
+                        <input type="text" id="categoryName" name="categoryName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryGoal">Goal Amount (Optional)</label>
+                        <input type="number" id="categoryGoal" name="categoryGoal" step="0.01" min="0">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Category
+                    </button>
+                </form>
+            </div>
+
+            <div class="recent-transactions-section">
+                <h2>Recent Transactions by Category</h2>
+                <div class="transactions-by-category" id="transactionsByCategory">
+                    <!-- Transactions grouped by category will be shown here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="savings-script.js"></script>
+</body>
+</html>

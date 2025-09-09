@@ -144,6 +144,54 @@ class FirebaseService {
     }
   }
 
+  // Category methods
+  async addCategory(category) {
+    if (!this.user) {
+      return { success: false, error: 'User not authenticated' };
+    }
+
+    try {
+      const categoryData = {
+        ...category,
+        userId: this.user.uid,
+        createdAt: new Date()
+      };
+
+      const docRef = await addDoc(collection(db, 'categories'), categoryData);
+      return { success: true, id: docRef.id };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
+  async getCategories() {
+    if (!this.user) {
+      return { success: false, error: 'User not authenticated' };
+    }
+
+    try {
+      const q = query(
+        collection(db, 'categories'),
+        where('userId', '==', this.user.uid),
+        orderBy('createdAt', 'desc')
+      );
+      
+      const querySnapshot = await getDocs(q);
+      const categories = [];
+      
+      querySnapshot.forEach((doc) => {
+        categories.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+
+      return { success: true, categories };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
   // Real-time listener for transactions
   subscribeToTransactions(callback) {
     if (!this.user) {
@@ -179,17 +227,21 @@ class FirebaseService {
   }
 
   clearTransactions() {
-    document.getElementById('transactionsList').innerHTML = `
-      <div class="no-transactions">
-        <i class="fas fa-receipt"></i>
-        <p>Please sign in to view your transactions</p>
-      </div>
-    `;
+    const transactionsList = document.getElementById('transactionsList');
+    if (transactionsList) {
+      transactionsList.innerHTML = `
+        <div class="no-transactions">
+          <i class="fas fa-receipt"></i>
+          <p>Please sign in to view your transactions</p>
+        </div>
+      `;
+    }
     this.updateBalance([]);
   }
 
   displayTransactions(transactions) {
     const transactionsList = document.getElementById('transactionsList');
+    if (!transactionsList) return;
     
     if (transactions.length === 0) {
       transactionsList.innerHTML = `
@@ -233,9 +285,13 @@ class FirebaseService {
     
     const totalBalance = totalIncome - totalExpenses;
 
-    document.getElementById('totalBalance').textContent = `$${totalBalance.toFixed(2)}`;
-    document.getElementById('totalIncome').textContent = `$${totalIncome.toFixed(2)}`;
-    document.getElementById('totalExpenses').textContent = `$${totalExpenses.toFixed(2)}`;
+    const totalBalanceEl = document.getElementById('totalBalance');
+    const totalIncomeEl = document.getElementById('totalIncome');
+    const totalExpensesEl = document.getElementById('totalExpenses');
+
+    if (totalBalanceEl) totalBalanceEl.textContent = `$${totalBalance.toFixed(2)}`;
+    if (totalIncomeEl) totalIncomeEl.textContent = `$${totalIncome.toFixed(2)}`;
+    if (totalExpensesEl) totalExpensesEl.textContent = `$${totalExpenses.toFixed(2)}`;
   }
 }
 

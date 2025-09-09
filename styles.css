@@ -441,3 +441,229 @@ body {
         opacity: 1;
     }
 }
+
+/* Add these styles to your existing styles.css file */
+
+/* Savings Page Styles */
+.savings-dashboard {
+    display: grid;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.total-savings-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.savings-amount {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.savings-subtitle {
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.category-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 4px solid #ddd;
+}
+
+.category-card.positive {
+    border-left-color: #28a745;
+}
+
+.category-card.negative {
+    border-left-color: #dc3545;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.category-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.category-amount.positive {
+    color: #28a745;
+}
+
+.category-amount.negative {
+    color: #dc3545;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    transition: width 0.3s ease;
+}
+
+.goal-text {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Breakdown Chart */
+.breakdown-chart {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.chart-item {
+    margin-bottom: 15px;
+}
+
+.chart-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.category-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.category-value {
+    font-weight: bold;
+    color: #666;
+}
+
+.chart-bar {
+    width: 100%;
+    height: 20px;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.chart-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.3s ease;
+}
+
+/* Category Form */
+.category-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Transactions by Category */
+.transactions-by-category {
+    display: grid;
+    gap: 20px;
+}
+
+.category-transactions {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.category-transactions h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.category-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.category-total.positive {
+    color: #28a745;
+}
+
+.category-total.negative {
+    color: #dc3545;
+}
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.more-transactions {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Navigation Links */
+.auth-section a {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .savings-amount {
+        font-size: 2rem;
+    }
+    
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .chart-label {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
