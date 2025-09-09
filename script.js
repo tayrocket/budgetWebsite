@@ -26,60 +26,116 @@ function setupEventListeners() {
     if (signUpForm) {
         signUpForm.addEventListener('submit', handleSignUp);
     }
+
+    // Auth buttons
+    const signInBtn = document.getElementById('signInBtn');
+    const signUpBtn = document.getElementById('signUpBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    if (signInBtn) {
+        signInBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showAuthForms();
+        });
+    }
+
+    if (signUpBtn) {
+        signUpBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showAuthForms();
+        });
+    }
+
+    if (signOutBtn) {
+        signOutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleSignOut();
+        });
+    }
 }
 
 async function handleTransactionSubmit(e) {
     e.preventDefault();
     
-    const formData = new FormData(transactionForm);
-    const transaction = {
-        description: formData.get('description'),
-        amount: formData.get('amount'),
-        type: formData.get('type'),
-        category: formData.get('category')
-    };
+    try {
+        const formData = new FormData(transactionForm);
+        const transaction = {
+            description: formData.get('description'),
+            amount: formData.get('amount'),
+            type: formData.get('type'),
+            category: formData.get('category')
+        };
 
-    const result = await firebaseService.addTransaction(transaction);
-    
-    if (result.success) {
-        transactionForm.reset();
-        showNotification('Transaction added successfully!', 'success');
-    } else {
-        showNotification(`Error: ${result.error}`, 'error');
+        const result = await firebaseService.addTransaction(transaction);
+        
+        if (result.success) {
+            transactionForm.reset();
+            showNotification('Transaction added successfully!', 'success');
+        } else {
+            showNotification(`Error: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('Transaction error:', error);
+        showNotification('An error occurred while adding the transaction', 'error');
     }
 }
 
 async function handleSignIn(e) {
     e.preventDefault();
     
-    const formData = new FormData(signInForm);
-    const email = formData.get('email');
-    const password = formData.get('password');
+    try {
+        const formData = new FormData(signInForm);
+        const email = formData.get('email');
+        const password = formData.get('password');
 
-    const result = await firebaseService.signIn(email, password);
-    
-    if (result.success) {
-        showNotification('Signed in successfully!', 'success');
-        hideAuthForms();
-    } else {
-        showNotification(`Error: ${result.error}`, 'error');
+        const result = await firebaseService.signIn(email, password);
+        
+        if (result.success) {
+            showNotification('Signed in successfully!', 'success');
+            hideAuthForms();
+        } else {
+            showNotification(`Error: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('Sign in error:', error);
+        showNotification('An error occurred while signing in', 'error');
     }
 }
 
 async function handleSignUp(e) {
     e.preventDefault();
     
-    const formData = new FormData(signUpForm);
-    const email = formData.get('email');
-    const password = formData.get('password');
+    try {
+        const formData = new FormData(signUpForm);
+        const email = formData.get('email');
+        const password = formData.get('password');
 
-    const result = await firebaseService.signUp(email, password);
-    
-    if (result.success) {
-        showNotification('Account created successfully!', 'success');
-        hideAuthForms();
-    } else {
-        showNotification(`Error: ${result.error}`, 'error');
+        const result = await firebaseService.signUp(email, password);
+        
+        if (result.success) {
+            showNotification('Account created successfully!', 'success');
+            hideAuthForms();
+        } else {
+            showNotification(`Error: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('Sign up error:', error);
+        showNotification('An error occurred while creating account', 'error');
+    }
+}
+
+async function handleSignOut() {
+    try {
+        const result = await firebaseService.signOut();
+        if (result.success) {
+            showNotification('Signed out successfully!', 'success');
+            showAuthForms();
+        } else {
+            showNotification(`Error: ${result.error}`, 'error');
+        }
+    } catch (error) {
+        console.error('Sign out error:', error);
+        showNotification('An error occurred while signing out', 'error');
     }
 }
 
@@ -93,16 +149,34 @@ function setupAuthUI() {
 }
 
 function showAuthForms() {
-    // You can add auth forms to your HTML or create them dynamically
-    console.log('User needs to sign in');
+    const authForms = document.getElementById('authForms');
+    const signInBtn = document.getElementById('signInBtn');
+    const signUpBtn = document.getElementById('signUpBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    if (authForms) authForms.style.display = 'block';
+    if (signInBtn) signInBtn.style.display = 'none';
+    if (signUpBtn) signUpBtn.style.display = 'none';
+    if (signOutBtn) signOutBtn.style.display = 'none';
 }
 
 function hideAuthForms() {
-    // Hide auth forms when user is signed in
-    console.log('User is signed in');
+    const authForms = document.getElementById('authForms');
+    const signInBtn = document.getElementById('signInBtn');
+    const signUpBtn = document.getElementById('signUpBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    if (authForms) authForms.style.display = 'none';
+    if (signInBtn) signInBtn.style.display = 'inline-block';
+    if (signUpBtn) signUpBtn.style.display = 'inline-block';
+    if (signOutBtn) signOutBtn.style.display = 'inline-block';
 }
 
 function showNotification(message, type) {
+    // Remove any existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+
     // Create a simple notification system
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
@@ -125,7 +199,9 @@ function showNotification(message, type) {
     
     // Remove after 3 seconds
     setTimeout(() => {
-        notification.remove();
+        if (notification.parentNode) {
+            notification.remove();
+        }
     }, 3000);
 }
 

@@ -31,6 +31,7 @@ class FirebaseService {
       this.user = userCredential.user;
       return { success: true, user: this.user };
     } catch (error) {
+      console.error('Sign up error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -41,6 +42,7 @@ class FirebaseService {
       this.user = userCredential.user;
       return { success: true, user: this.user };
     } catch (error) {
+      console.error('Sign in error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -51,6 +53,7 @@ class FirebaseService {
       this.user = null;
       return { success: true };
     } catch (error) {
+      console.error('Sign out error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -60,7 +63,10 @@ class FirebaseService {
       this.user = user;
       if (user) {
         console.log('User signed in:', user.email);
-        this.loadTransactions();
+        // Only load transactions if we're on the main page
+        if (document.getElementById('transactionsList')) {
+          this.loadTransactions();
+        }
       } else {
         console.log('User signed out');
         this.clearTransactions();
@@ -85,6 +91,7 @@ class FirebaseService {
       const docRef = await addDoc(collection(db, 'transactions'), transactionData);
       return { success: true, id: docRef.id };
     } catch (error) {
+      console.error('Add transaction error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -113,6 +120,7 @@ class FirebaseService {
 
       return { success: true, transactions };
     } catch (error) {
+      console.error('Get transactions error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -127,6 +135,7 @@ class FirebaseService {
       await updateDoc(transactionRef, updates);
       return { success: true };
     } catch (error) {
+      console.error('Update transaction error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -140,6 +149,7 @@ class FirebaseService {
       await deleteDoc(doc(db, 'transactions', transactionId));
       return { success: true };
     } catch (error) {
+      console.error('Delete transaction error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -160,6 +170,7 @@ class FirebaseService {
       const docRef = await addDoc(collection(db, 'categories'), categoryData);
       return { success: true, id: docRef.id };
     } catch (error) {
+      console.error('Add category error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -188,6 +199,7 @@ class FirebaseService {
 
       return { success: true, categories };
     } catch (error) {
+      console.error('Get categories error:', error);
       return { success: false, error: error.message };
     }
   }
@@ -218,6 +230,9 @@ class FirebaseService {
 
   // Helper methods for UI
   loadTransactions() {
+    const transactionsList = document.getElementById('transactionsList');
+    if (!transactionsList) return;
+
     this.getTransactions().then(result => {
       if (result.success) {
         this.displayTransactions(result.transactions);
