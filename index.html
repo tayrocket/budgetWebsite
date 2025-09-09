@@ -12,7 +12,43 @@
         <header class="header">
             <h1><i class="fas fa-wallet"></i> Budget Tracker</h1>
             <p>Take control of your finances</p>
+            <div class="auth-section" id="authSection">
+                <button id="signInBtn" class="btn btn-secondary">Sign In</button>
+                <button id="signUpBtn" class="btn btn-outline">Sign Up</button>
+                <button id="signOutBtn" class="btn btn-danger" style="display: none;">Sign Out</button>
+            </div>
         </header>
+
+        <!-- Authentication Forms -->
+        <div class="auth-forms" id="authForms" style="display: none;">
+            <div class="auth-form-container">
+                <form id="signInForm" class="auth-form">
+                    <h2>Sign In</h2>
+                    <div class="form-group">
+                        <label for="signInEmail">Email</label>
+                        <input type="email" id="signInEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signInPassword">Password</label>
+                        <input type="password" id="signInPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+
+                <form id="signUpForm" class="auth-form">
+                    <h2>Sign Up</h2>
+                    <div class="form-group">
+                        <label for="signUpEmail">Email</label>
+                        <input type="email" id="signUpEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpPassword">Password</label>
+                        <input type="password" id="signUpPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+        </div>
 
         <div class="dashboard">
             <div class="balance-card">
@@ -77,13 +113,14 @@
                 <div class="transactions-list" id="transactionsList">
                     <div class="no-transactions">
                         <i class="fas fa-receipt"></i>
-                        <p>No transactions yet. Add your first transaction above!</p>
+                        <p>Please sign in to view your transactions</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>
