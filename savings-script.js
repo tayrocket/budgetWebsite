@@ -1,4 +1,4 @@
-import firebaseService from './firebase-service.js';
+import firebaseService from './firebase-service-secure.js';
 
 // DOM elements
 const categoryForm = document.getElementById('categoryForm');
