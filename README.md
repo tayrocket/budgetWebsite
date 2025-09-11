@@ -21,7 +21,7 @@ A modern, responsive budget tracking web application built with vanilla HTML, CS
 ### Installation
 
 1. Clone or download this repository
-2. Open `index.html` in your web browser, or
+2. Open `index-secure.html` in your web browser, or
 3. For development with live reload:
    ```bash
    npm install
@@ -39,7 +39,7 @@ A modern, responsive budget tracking web application built with vanilla HTML, CS
 
 ```
 budgetWebsite/
-├── index.html          # Main HTML file
+├── index-secure.html          # Main HTML file
 ├── styles.css          # CSS styling
 ├── script.js           # JavaScript functionality
 ├── package.json        # Node.js dependencies

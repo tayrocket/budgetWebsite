@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Security headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://firebaseapp.com https://firebase.googleapis.com; img-src 'self' data: https:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-wallet"></i> Budget Tracker</h1>
+            <p>Take control of your finances</p>
+            <div class="auth-section" id="authSection">
+                <button id="signInBtn" class="btn btn-secondary">Sign In</button>
+                <button id="signUpBtn" class="btn btn-outline">Sign Up</button>
+                <button id="signOutBtn" class="btn btn-danger" style="display: none;">Sign Out</button>
+                <a href="savings.html" class="btn btn-outline">
+                    <i class="fas fa-piggy-bank"></i> Savings
+                </a>
+            </div>
+        </header>
+
+        <!-- Enhanced Authentication Forms -->
+        <div class="auth-forms" id="authForms" style="display: none;">
+            <div class="auth-form-container">
+                <form id="signInForm" class="auth-form">
+                    <h2>Sign In</h2>
+                    <div class="form-group">
+                        <label for="signInEmail">Email</label>
+                        <input type="email" id="signInEmail" name="email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signInPassword">Password</label>
+                        <input type="password" id="signInPassword" name="password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <button type="button" id="forgotPasswordBtn" class="btn btn-outline">Forgot Password?</button>
+                </form>
+
+                <form id="signUpForm" class="auth-form">
+                    <h2>Sign Up</h2>
+                    <div class="form-group">
+                        <label for="signUpEmail">Email</label>
+                        <input type="email" id="signUpEmail" name="email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signUpPassword">Password</label>
+                        <input type="password" id="signUpPassword" name="password" required autocomplete="new-password" minlength="8">
+                        <small class="password-requirements">
+                            Must be at least 8 characters with uppercase, lowercase, and number
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="balance-card">
+                <h2>Total Balance</h2>
+                <div class="balance-amount" id="totalBalance">$0.00</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card income">
+                    <i class="fas fa-arrow-up"></i>
+                    <h3>Income</h3>
+                    <div class="stat-amount" id="totalIncome">$0.00</div>
+                </div>
+                <div class="stat-card expense">
+                    <i class="fas fa-arrow-down"></i>
+                    <h3>Expenses</h3>
+                    <div class="stat-amount" id="totalExpenses">$0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="transaction-section">
+                <h2>Add Transaction</h2>
+                <form id="transactionForm" class="transaction-form">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" name="amount" step="0.01" min="0.01" max="999999.99" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select id="type" name="type" required>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" required>
+                            <option value="emergency">Emergency Fund</option>
+                            <option value="vacation">Vacation</option>
+                            <option value="retirement">Retirement</option>
+                            <option value="house">House</option>
+                            <option value="car">Car</option>
+                            <option value="education">Education</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="investment">Investment</option>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="food">Food</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Transaction
+                    </button>
+                </form>
+            </div>
+
+            <div class="transactions-section">
+                <h2>Recent Transactions</h2>
+                <div class="transactions-list" id="transactionsList">
+                    <div class="no-transactions">
+                        <i class="fas fa-receipt"></i>
+                        <p>Please sign in to view your transactions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="script-secure.js"></script>
+</body>
+</html>
